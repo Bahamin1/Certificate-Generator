@@ -1,6 +1,6 @@
 import { Suspense } from 'react'
-import CertificateDetails from '../../components/CertificateDetails'
-import { CertificateDetailsSkeleton } from '../../components/CertificateDetailsSkeleton'
+import CertificateDetails from '@/components/CertificateDetails'
+import { CertificateDetailsSkeleton } from '@/components/CertificateDetailsSkeleton'
 
 export default function VerifyCertificatePage({ params }: { params: { id: string } }) {
   return (
