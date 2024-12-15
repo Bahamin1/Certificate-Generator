@@ -47,7 +47,6 @@ const GilavaCertificate: React.FC<CertificateProps> = ({
       })
       const imgProps = pdf.getImageProperties(imgData)
       const pdfWidth = pdf.internal.pageSize.getWidth()
-      const pdfHeight = pdf.internal.pageSize.getHeight()
       const imgWidth = pdfWidth
       const imgHeight = (imgProps.height * pdfWidth) / imgProps.width
 
@@ -145,7 +144,7 @@ const GilavaCertificate: React.FC<CertificateProps> = ({
           <h1 className="text-xl font-bold mb-8" style={{
             textShadow: '2px 2px 4px rgba(170, 168, 168, 0.79)',
             fontFamily: "'Open Sans', serif"
-          }}>This certificate serves as a token of {recipientName}'s accomplishment. We wish them continued success in all future endeavors.</h1>
+          }}>This certificate serves as a token of {recipientName}&apos;s accomplishment. We wish them continued success in all future endeavors.</h1>
           </div>
           
           {/* Date and Issuing Authority */}
