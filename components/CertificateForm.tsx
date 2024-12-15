@@ -53,7 +53,7 @@ export default function CertificateForm() {
     <div className="flex flex-col lg:flex-row gap-8">
       <form onSubmit={handleSubmit} className="space-y-4 w-full lg:w-1/3">
         <div>
-          <Label htmlFor="recipientName">Recipient's Name</Label>
+          <Label htmlFor="recipientName">Recipient&apos;s Name</Label>
           <Input
             id="recipientName"
             name="recipientName"
