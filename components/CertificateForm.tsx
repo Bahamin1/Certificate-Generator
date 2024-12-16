@@ -18,6 +18,7 @@ export default function CertificateForm() {
   })
   const [certificate, setCertificate] = useState<CertificateType | null>(null)
   const [isLoading, setIsLoading] = useState(false)
+  const [certificateNumber, setCertificateNumber] = useState('')
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
@@ -32,14 +33,28 @@ export default function CertificateForm() {
     e.preventDefault()
     setIsLoading(true)
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000))
-      const generatedCertificate: CertificateType = {
-        ...formData,
-        id: Date.now().toString(),
-        qrCodeData: `https://gilava.com/verify/${Date.now()}`
+      const response = await fetch('/api/certificates', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          certificateNumber: Date.now().toString(), // Generate a unique certificate number
+          recipientName: formData.recipientName,
+          certificateType: formData.certificateType,
+          courseName: formData.courseName,
+          dateIssued: formData.date,
+          issuingAuthority: formData.issuingAuthority,
+        }),
+      })
+
+      if (!response.ok) {
+        throw new Error('Failed to create certificate')
       }
-      setCertificate(generatedCertificate)
+
+      const data = await response.json()
+      setCertificate(data.certificate)
+      setCertificateNumber(data.certificate.certificate_number)
       toast.success('Certificate generated successfully!')
     } catch (error) {
       console.error('Error generating certificate:', error)
@@ -107,9 +122,15 @@ export default function CertificateForm() {
         </Button>
       </form>
       {certificate && (
-        <div className="w-full lg:w-2/3">
-          <GilavaCertificate {...certificate} />
-        </div>
+        <>
+          <div className="w-full lg:w-2/3">
+            <GilavaCertificate {...certificate} />
+          </div>
+          <div className="mt-4 p-4 bg-green-100 border border-green-400 text-green-700 rounded">
+            <p className="font-semibold">Certificate Generated Successfully</p>
+            <p>Certificate Number: {certificateNumber}</p>
+          </div>
+        </>
       )}
     </div>
   )
