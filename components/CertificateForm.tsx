@@ -107,7 +107,7 @@ export default function CertificateForm() {
         </Button>
       </form>
       {certificate && (
-        <div className="w-full lg:w-2/3">
+        <div className="flex flex-col lg:flex-row gap-8 justify-end items-end">
           <GilavaCertificate {...certificate} />
         </div>
       )}
