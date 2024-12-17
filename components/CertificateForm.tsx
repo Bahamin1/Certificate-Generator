@@ -122,15 +122,9 @@ export default function CertificateForm() {
         </Button>
       </form>
       {certificate && (
-        <>
-          <div className="w-full lg:w-2/3">
-            <GilavaCertificate {...certificate} />
-          </div>
-          <div className="mt-4 p-4 bg-green-100 border border-green-400 text-green-700 rounded">
-            <p className="font-semibold">Certificate Generated Successfully</p>
-            <p>Certificate Number: {certificateNumber}</p>
-          </div>
-        </>
+        <div className="w-full lg:w-2/3">
+          <GilavaCertificate {...certificate} />
+        </div>
       )}
     </div>
   )
