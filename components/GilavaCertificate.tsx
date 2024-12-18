@@ -183,7 +183,7 @@ const GilavaCertificate: React.FC<CertificateProps> = ({
           {/* QR Code */}
           <div className="absolute bottom-1 left-1/2 transform -translate-x-1/2 w-32 h-32">
             <QRCodeSVG value={qrCodeData} size={110} />
-            <h1 className='font-bold mb-2'>Certificate No: {qrCodeData.slice(26)}</h1>
+            <h1 className='font-bold mb-2'>Certificate No: {qrCodeData.slice(54)}</h1>
 
           </div>
         </div>

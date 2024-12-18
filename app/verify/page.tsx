@@ -12,7 +12,7 @@ const ImageViewer = dynamic(() => import('@/components/ImageViewer'), {
 
 export default function VerifyPage() {
   const [imagePaths, setImagePaths] = useState([
-    '/certificate-firouzeh-adil_page-0001.jpg',
+    '/img19.jpg',
    
   ])
   const [newImagePath, setNewImagePath] = useState('')
@@ -20,7 +20,7 @@ export default function VerifyPage() {
 
   const handleResetImages = () => {
     setImagePaths([
-      '/certificate-firouzeh-adil_page-0001.jpg',
+      '/img19.jpg',
    
     ])
   }
