@@ -1,4 +1,4 @@
-import { getCertificate } from '@/./lib/api'
+import { getCertificate } from '@/lib/api'
 import { notFound } from 'next/navigation'
 
 interface CertificateDetailsProps {
