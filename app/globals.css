@@ -35,6 +35,7 @@
     --radius: 0.5rem;
   }
 
+
   /* Add these styles for react-pdf */
   .react-pdf__Document {
     display: flex;

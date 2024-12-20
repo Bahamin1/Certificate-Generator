@@ -95,7 +95,7 @@ const GilavaCertificate: React.FC<CertificateProps> = ({
           </div>
           
            {/* Title */}
-           <h1 className="absolute z-5 top-1/1 left-2/1 -translate-x-2/2 -translate-y-3/4 object-contain opacity-100 pointer-events-none relative text-5xl mb-4 md:text-4xl font-serif text-blue-1000  mt-0 mb-1 text-center" style={{
+           <h1 className=" top-1 bottom-1 absolute z-5 top-1/1 left-2/1 -translate-x-2/2 -translate-y-3/4 object-contain opacity-100 pointer-events-none relative text-5xl mb-4 md:text-4xl font-serif text-blue-1000  mt-0 mb-1 text-center" style={{
             textShadow: '2px 2px 4px rgb(142, 142, 144)',
             fontFamily: "'Playfair Display', serif"
           }}>
@@ -105,7 +105,7 @@ const GilavaCertificate: React.FC<CertificateProps> = ({
          
           
           {/* Certificate Type */}
-          <div className="text-4xl mb-2 font-bold text-center text-gold-600" style={{color: '#D4AF37'}}>
+          <div className=" text-4xl mb-2 font-bold text-center text-gold-600" style={{color: '#D4AF37'}}>
             {certificateType} Certificate
           </div>
           
@@ -133,13 +133,13 @@ const GilavaCertificate: React.FC<CertificateProps> = ({
           alt="right Logo"
           width={200}
           height={200}
-          className=" absolute bottom-12 right-16 w-40"
+          className=" absolute bottom-3 right-16 w-40"
         />  {courseName} <Image
           src="/left.png"
           alt="left Logo"
           width={200}
           height={200}
-          className="absolute bottom-12 left-16 w-40"
+          className="absolute bottom-3 left-16 w-40"
         /></p>
           <h1 className="text-xl font-bold mb-8" style={{
             textShadow: '2px 2px 4px rgba(170, 168, 168, 0.79)',
@@ -168,7 +168,7 @@ const GilavaCertificate: React.FC<CertificateProps> = ({
           </div>
           
           {/* Signature Line */}
-          <div className="relative">
+          <div className="bottom-6  relative">
             <div className="w-72 h-px bg-gray-400 mb-2"></div>
             <p className="text-lg text-gray-600">Authorized Signature</p>
             <Image
@@ -181,7 +181,7 @@ const GilavaCertificate: React.FC<CertificateProps> = ({
           </div>
           
           {/* QR Code */}
-          <div className="absolute bottom-1 left-1/2 transform -translate-x-1/2 w-32 h-32">
+          <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 w-32 h-32">
             <QRCodeSVG value={qrCodeData} size={110} />
             <h1 className='font-bold mb-2'>Certificate No: {qrCodeData.slice(54)}</h1>
 
