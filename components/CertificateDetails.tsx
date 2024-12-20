@@ -1,12 +1,11 @@
+import { getCertificate } from '@/./lib/api'
 import { notFound } from 'next/navigation'
 
-async function getCertificate(id: string) {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/certificates/${id}`, { cache: 'no-store' })
-  if (!res.ok) return null
-  return res.json()
+interface CertificateDetailsProps {
+  id: string
 }
 
-export default async function CertificateDetails({ id }: { id: string }) {
+export default async function CertificateDetails({ id }: CertificateDetailsProps) {
   const certificate = await getCertificate(id)
 
   if (!certificate) {
@@ -19,27 +18,27 @@ export default async function CertificateDetails({ id }: { id: string }) {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
           <p className="font-semibold">Certificate Holder:</p>
-          <p>{certificate.recipient_name}</p>
+          <p>{certificate.recipientName}</p>
         </div>
         <div>
           <p className="font-semibold">Certificate Number:</p>
-          <p>{certificate.certificate_number}</p>
+          <p>{certificate.id}</p>
         </div>
         <div>
           <p className="font-semibold">Certificate Type:</p>
-          <p>{certificate.certificate_type}</p>
+          <p>{certificate.certificateType}</p>
         </div>
         <div>
           <p className="font-semibold">Course Name:</p>
-          <p>{certificate.course_name}</p>
+          <p>{certificate.courseName}</p>
         </div>
         <div>
           <p className="font-semibold">Date of Issue:</p>
-          <p>{new Date(certificate.issue_date).toLocaleDateString()}</p>
+          <p>{certificate.date}</p>
         </div>
         <div>
           <p className="font-semibold">Issuing Authority:</p>
-          <p>{certificate.issuing_authority}</p>
+          <p>{certificate.issuingAuthority}</p>
         </div>
       </div>
       <div className="mt-6 text-center">
