@@ -37,7 +37,7 @@ export default function CertificateForm() {
       const generatedCertificate: CertificateType = {
         ...formData,
         id: Date.now().toString(),
-        qrCodeData: `https://certificate-generator-blond.vercel.app/verify/${Date.now()}`
+        qrCodeData: `https://gilava-academy.vercel.app/verify/${Date.now()}`
       }
       setCertificate(generatedCertificate)
       toast.success('Certificate generated successfully!')
