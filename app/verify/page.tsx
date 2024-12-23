@@ -7,7 +7,7 @@ import { useState } from 'react'
 
 const ImageViewer = dynamic(() => import('@/components/ImageViewer'), {
   ssr: false,
-  loading: () => <p>Loading image viewer...</p>
+  loading: () => <p>Loading Certificate...</p>
 })
 
 export default function VerifyPage() {
@@ -33,7 +33,7 @@ export default function VerifyPage() {
           type="text" 
           value={newImagePath} 
           onChange={(e) => setNewImagePath(e.target.value)}
-          placeholder="Enter image path (e.g., /sample-certificate-4.jpg)"
+          placeholder="Enter certificate number here)"
         />
         <Button onClick={handleResetImages} variant="outline">Reset</Button>
       </div>
