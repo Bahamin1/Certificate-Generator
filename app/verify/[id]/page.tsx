@@ -6,9 +6,10 @@ import { Button } from '@/components/ui/button'
 
 const prisma = new PrismaClient()
 
-export default async function VerifyPage({ params }: { params: { id: string } }) {
+export default async function VerifyPage(props: { params: Promise<{ id: string }> }) {
     // Awaiting params to satisfy Next.js 15+ async params requirement
-    const { id } = await params
+    const params = await props.params;
+    const { id } = params;
 
     const certificate = await prisma.certificate.findUnique({
         where: { id },
