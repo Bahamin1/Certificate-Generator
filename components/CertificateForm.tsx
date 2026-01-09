@@ -70,18 +70,15 @@ export default function CertificateForm() {
     if (!certificate) return
     setIsLoading(true)
     try {
-      const node = document.getElementById('certificate-display')
+      const node = document.getElementById('gilava-certificate-frame')
       let imageData = ''
 
       if (node) {
-        // Use JPEG for storage. Increased quality/ratio per user request (~2-3MB goal).
+        // Use JPEG for storage. Consistently target ONLY the A4 frame.
+        // Quality 0.95 and PixelRatio 2.5 for high res ~2-3MB.
         imageData = await toJpeg(node, {
           quality: 0.95,
           pixelRatio: 2.5,
-          filter: (child) => {
-            // Exclude elements with 'no-capture' class (buttons)
-            return !child.classList?.contains('no-capture')
-          }
         })
       }
 

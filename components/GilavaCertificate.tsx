@@ -158,6 +158,7 @@ const GilavaCertificate: React.FC<CertificateProps> = ({
       `}</style>
 
       <div
+        id="gilava-certificate-frame"
         ref={certificateRef}
         className="w-[297mm] h-[210mm] bg-white text-slate-900 relative overflow-hidden shadow-xl"
         style={{ fontFamily: "'Playfair Display', serif" }}
