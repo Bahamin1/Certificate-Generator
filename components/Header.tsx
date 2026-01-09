@@ -14,7 +14,9 @@ export default function Header() {
                 <div className="flex items-center justify-between h-20">
                     <div className="flex items-center gap-2">
                         <Link href="/" className="flex items-center gap-2">
-                            <Image src="/logo1.png" alt="Gilava Logo" width={40} height={40} className="w-10 h-10 object-contain" />
+                            <div className="bg-white p-1 rounded-md">
+                                <Image src="/logo1.png" alt="Gilava Logo" width={40} height={40} className="w-10 h-10 object-contain" />
+                            </div>
                             <span className="text-2xl font-serif font-bold tracking-tight text-white">
                                 Gilava <span className="text-blue-400">Academy</span>
                             </span>
