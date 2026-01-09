@@ -1,23 +1,28 @@
 import { NextResponse } from 'next/server'
+import { PrismaClient } from '@prisma/client'
+
+const prisma = new PrismaClient()
 
 export async function POST(request: Request) {
   try {
     const body = await request.json()
-    
-    // Simulate some server-side processing
-    await new Promise(resolve => setTimeout(resolve, 1000))
+    const { id, recipientName, certificateType, date, issuingAuthority, qrCodeData, studentPhoto } = body
 
-    // Generate a mock certificate
-    const certificate = {
-      id: Math.floor(Math.random() * 1000000),
-      ...body,
-      createdAt: new Date().toISOString()
-    }
+    const certificate = await prisma.certificate.create({
+      data: {
+        id, // Allow client-side ID or let DB generate if omitted (but we pass it currently)
+        recipientName,
+        certificateType,
+        date,
+        issuingAuthority,
+        qrCodeData,
+        studentPhoto,
+      },
+    })
 
-    return NextResponse.json(certificate, { status: 201 })
+    return NextResponse.json(certificate)
   } catch (error) {
-    console.error('Error in certificate generation:', error)
-    return NextResponse.json({ message: 'Internal server error' }, { status: 500 })
+    console.error('Error saving certificate:', error)
+    return NextResponse.json({ error: 'Failed to save certificate' }, { status: 500 })
   }
 }
-

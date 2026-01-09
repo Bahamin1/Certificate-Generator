@@ -12,11 +12,11 @@ export default function CertificateForm() {
   const [formData, setFormData] = useState({
     recipientName: '',
     certificateType: '',
-    courseName: '',
     date: '',
     issuingAuthority: 'Gilava English Academy',
   })
   const [certificate, setCertificate] = useState<CertificateType | null>(null)
+  const [studentPhoto, setStudentPhoto] = useState<string>('')
   const [isLoading, setIsLoading] = useState(false)
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -28,16 +28,29 @@ export default function CertificateForm() {
     setFormData((prev) => ({ ...prev, certificateType: value }))
   }
 
+  const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (file) {
+      const reader = new FileReader()
+      reader.onloadend = () => {
+        setStudentPhoto(reader.result as string)
+      }
+      reader.readAsDataURL(file)
+    }
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsLoading(true)
     try {
       // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 1000))
+      const generatedId = Date.now().toString()
       const generatedCertificate: CertificateType = {
         ...formData,
-        id: Date.now().toString(),
-        qrCodeData: `https://gilava-academy.vercel.app/verify/${Date.now()}`
+        id: generatedId,
+        qrCodeData: `https://gilava-academy.app/verify/${generatedId}`,
+        studentPhoto: studentPhoto
       }
       setCertificate(generatedCertificate)
       toast.success('Certificate generated successfully!')
@@ -49,9 +62,55 @@ export default function CertificateForm() {
     }
   }
 
+  const handleSave = async () => {
+    if (!certificate) return
+    setIsLoading(true)
+    try {
+      const response = await fetch('/api/certificates', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(certificate),
+      })
+
+      if (response.ok) {
+        toast.success('Certificate saved to database!')
+      } else {
+        toast.error('Failed to save certificate.')
+      }
+    } catch (error) {
+      console.error('Save error:', error)
+      toast.error('Error saving certificate.')
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  if (certificate) {
+    return (
+      <div className="flex flex-col items-center gap-6 w-full animate-in fade-in duration-500">
+        <div className="flex gap-4 w-full max-w-4xl justify-between items-center bg-slate-100 p-4 rounded-lg shadow-sm">
+          <Button variant="outline" onClick={() => setCertificate(null)}>
+            ← Back to Edit
+          </Button>
+          <div className="flex gap-2">
+            <Button onClick={handleSave} disabled={isLoading} className="bg-green-600 hover:bg-green-700 text-white">
+              {isLoading ? 'Saving...' : 'Save to Database'}
+            </Button>
+          </div>
+        </div>
+        <div className="transform scale-[0.8] origin-top md:scale-100">
+          <GilavaCertificate {...certificate} />
+        </div>
+      </div>
+    )
+  }
+
   return (
-    <div className="flex flex-col lg:flex-row gap-8">
-      <form onSubmit={handleSubmit} className="space-y-4 w-full lg:w-1/3">
+    <div className="max-w-md mx-auto bg-white p-8 rounded-xl shadow-lg border border-slate-100">
+      <h2 className="text-2xl font-bold mb-6 text-slate-800 text-center">New Certificate</h2>
+      <form onSubmit={handleSubmit} className="space-y-5">
         <div>
           <Label htmlFor="recipientName">Recipient&apos;s Name</Label>
           <Input
@@ -60,35 +119,26 @@ export default function CertificateForm() {
             value={formData.recipientName}
             onChange={handleInputChange}
             required
-            className="mt-1"
+            className="mt-1.5"
+            placeholder="e.g. John Doe"
           />
         </div>
         <div>
           <Label htmlFor="certificateType">Certificate Type</Label>
-          <Select onValueChange={handleSelectChange} required>
-            <SelectTrigger className="mt-1">
-              <SelectValue placeholder="Select certificate type" />
+          <Select onValueChange={handleSelectChange} required value={formData.certificateType}>
+            <SelectTrigger className="mt-1.5">
+              <SelectValue placeholder="Select Level" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="A1">A1</SelectItem>
-              <SelectItem value="A2">A2</SelectItem>
-              <SelectItem value="B1">B1</SelectItem>
-              <SelectItem value="B2">B2</SelectItem>
-              <SelectItem value="C1">C1</SelectItem>
+              <SelectItem value="A1">A1 Beginner</SelectItem>
+              <SelectItem value="A2">A2 Elementary</SelectItem>
+              <SelectItem value="B1">B1 Intermediate</SelectItem>
+              <SelectItem value="B2">B2 Upper Intermediate</SelectItem>
+              <SelectItem value="C1">C1 Advanced</SelectItem>
+              <SelectItem value="C2">C2 Proficiency</SelectItem>
               <SelectItem value="TOEFL">TOEFL</SelectItem>
             </SelectContent>
           </Select>
-        </div>
-        <div>
-          <Label htmlFor="courseName">Course Name</Label>
-          <Input
-            id="courseName"
-            name="courseName"
-            value={formData.courseName}
-            onChange={handleInputChange}
-            required
-            className="mt-1"
-          />
         </div>
         <div>
           <Label htmlFor="date">Date of Issue</Label>
@@ -99,18 +149,25 @@ export default function CertificateForm() {
             value={formData.date}
             onChange={handleInputChange}
             required
-            className="mt-1"
+            className="mt-1.5"
           />
         </div>
-        <Button type="submit" disabled={isLoading} className="w-full">
+        <div>
+          <Label htmlFor="studentPhoto">Student Photo (Optional)</Label>
+          <Input
+            id="studentPhoto"
+            name="studentPhoto"
+            type="file"
+            accept="image/*"
+            onChange={handlePhotoUpload}
+            className="mt-1.5 cursor-pointer"
+          />
+        </div>
+
+        <Button type="submit" disabled={isLoading} className="w-full bg-blue-900 hover:bg-blue-800 text-white py-6 text-lg mt-4">
           {isLoading ? 'Generating...' : 'Generate Certificate'}
         </Button>
       </form>
-      {certificate && (
-        <div className="w-full lg:w-2/3">
-          <GilavaCertificate {...certificate} />
-        </div>
-      )}
     </div>
   )
 }

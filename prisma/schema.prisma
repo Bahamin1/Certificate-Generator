@@ -21,3 +21,14 @@ model File {
   postId Int    @unique
   post   Post   @relation(fields: [postId], references: [id])
 }
+
+model Certificate {
+  id               String   @id @default(uuid())
+  recipientName    String
+  certificateType  String
+  date             String
+  issuingAuthority String
+  qrCodeData       String
+  studentPhoto     String?  // Storing Base64 for now
+  createdAt        DateTime @default(now())
+}

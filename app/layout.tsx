@@ -1,16 +1,22 @@
-import { Inter, Montserrat, Playfair_Display } from 'next/font/google'
+import { Inter, Montserrat, Playfair_Display, Pinyon_Script } from 'next/font/google'
 import Link from 'next/link'
 import { Toaster } from 'react-hot-toast'
 import './globals.css'
+import Header from '@/components/Header'
 
 const inter = Inter({ subsets: ['latin'] })
-const playfair = Playfair_Display({ 
+const playfair = Playfair_Display({
   subsets: ['latin'],
   variable: '--font-playfair',
 })
-const montserrat = Montserrat({ 
+const montserrat = Montserrat({
   subsets: ['latin'],
   variable: '--font-montserrat',
+})
+const pinyon = Pinyon_Script({
+  weight: '400',
+  subsets: ['latin'],
+  variable: '--font-pinyon',
 })
 
 export const metadata = {
@@ -26,26 +32,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <link
-          rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/react-pdf/5.7.2/Page/AnnotationLayer.css"
-        />
-        <link
-          rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/react-pdf/5.7.2/Page/TextLayer.css"
-        />
       </head>
-      <body className={`${inter.className} ${playfair.variable} ${montserrat.variable} font-sans bg-gray-100`}>
-        <header className="bg-gradient-to-r from-blue-700 to-blue-900 text-white p-4 shadow-md">
-          <nav className="container mx-auto flex justify-between items-center">
-            <h1 className="text-2xl font-bold">Gilava English Academy</h1>
-            <ul className="flex space-x-4">
-              <li><Link href="/" className="hover:underline">Home</Link></li>
-              <li><Link href="/verify" className="hover:underline">Verify Certificate</Link></li>
-            </ul>
-          </nav>
-        </header>
-        <main className="container mx-auto p-4 mt-8">
+      <body className={`${inter.className} ${playfair.variable} ${montserrat.variable} ${pinyon.variable} font-sans bg-gray-900 text-white min-h-screen flex flex-col`}>
+        <Header />
+        <main className="flex-grow">
           {children}
         </main>
         <Toaster />
