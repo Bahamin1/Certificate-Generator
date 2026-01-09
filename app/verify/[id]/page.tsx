@@ -28,7 +28,7 @@ export default async function VerifyPage(props: { params: Promise<{ id: string }
                     />
                 </div>
 
-                <Link href="/" className="mt-8">
+                <Link href="/verify" className="mt-8">
                     <Button variant="outline" className="border-slate-700 text-slate-300 hover:bg-slate-800 hover:text-white">
                         Verify Another Certificate
                     </Button>
