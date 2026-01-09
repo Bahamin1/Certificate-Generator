@@ -192,9 +192,7 @@ const GilavaCertificate: React.FC<CertificateProps> = ({
 
           {/* Header */}
           <div className="flex justify-between items-start w-full px-8 pt-2">
-            <div className="bg-white/80 backdrop-blur-sm p-2 rounded-lg border border-slate-100 shadow-sm">
-              <Image src={staticImages.logo} alt="Gilava Logo" width={120} height={120} className="object-contain" unoptimized />
-            </div>
+            <Image src={staticImages.logo} alt="Gilava Logo" width={150} height={150} className="object-contain" unoptimized />
             <div className="text-center flex-grow pt-4">
               <h1 className="text-4xl font-bold tracking-widest uppercase text-transparent bg-clip-text bg-gradient-to-r from-slate-900 via-slate-700 to-slate-900" style={{ letterSpacing: '0.15em' }}>
                 Gilava Academy
@@ -205,7 +203,7 @@ const GilavaCertificate: React.FC<CertificateProps> = ({
                 <div className="h-[1px] w-12 bg-[#D4AF37]"></div>
               </div>
             </div>
-            <div className="w-[130px]"></div> {/* Spacer for balance */}
+            <div className="w-[150px]"></div> {/* Spacer for balance */}
           </div>
 
           {/* Main Body */}
