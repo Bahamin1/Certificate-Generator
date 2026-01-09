@@ -8,8 +8,16 @@ export default function AdminPage() {
     const [isLoggedIn, setIsLoggedIn] = useState(false)
 
     const handleLogin = async (username: string, password: string) => {
-        // Simple client-side check for MVP
-        if (username === 'Gilava' && password === 'Afaridoun') {
+        const formData = new FormData()
+        formData.append('username', username)
+        formData.append('password', password)
+
+        // Dynamically import the action to avoid bundling issues if strictly client side, 
+        // but simple import is fine in Next 14/15 client components.
+        const { loginAction } = await import('@/app/actions/auth')
+        const isValid = await loginAction(formData)
+
+        if (isValid) {
             setIsLoggedIn(true)
             return true
         }
