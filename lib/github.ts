@@ -131,6 +131,23 @@ export async function getImageFromGitHub(id: string) {
     }
 
     const json = await response.json()
+
+    // If file is > 1MB, GitHub API doesn't return content, but provides download_url
+    if (!json.content && json.download_url) {
+        console.log(`Image > 1MB, fetching from: ${json.download_url}`)
+        const blobResponse = await fetch(json.download_url, { headers })
+        if (!blobResponse.ok) {
+            throw new Error(`GitHub Blob Fetch Error: ${blobResponse.status}`)
+        }
+        const arrayBuffer = await blobResponse.arrayBuffer()
+        const base64 = Buffer.from(arrayBuffer).toString('base64')
+        return `data:image/png;base64,${base64}`
+    }
+
+    if (!json.content) {
+        throw new Error('GitHub API returned no content and no download_url')
+    }
+
     // Content is base64 encoded
     return `data:image/png;base64,${json.content.replace(/\n/g, '')}`
 }
