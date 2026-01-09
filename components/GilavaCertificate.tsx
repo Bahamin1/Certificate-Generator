@@ -244,7 +244,7 @@ const GilavaCertificate: React.FC<CertificateProps> = ({
               <div className="text-center w-full">
                 <div className="h-px w-full bg-slate-300 mb-2"></div>
                 <p className="text-sm font-sans text-slate-500 uppercase tracking-widest mb-1">Date of Issue</p>
-                <p className="font-serif font-bold text-2xl text-slate-800">{date}</p>
+                <p className="font-serif font-bold text-2xl text-slate-800">{date.split('-').reverse().join('/')}</p>
               </div>
               <div className="mt-4 opacity-90">
                 <QRCodeSVG value={qrCodeData} size={85} fgColor="#334155" />
