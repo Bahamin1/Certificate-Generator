@@ -1,19 +1,15 @@
-import { PrismaClient } from '@prisma/client'
+import { getCertificateFromGitHub } from '@/lib/github'
 import GilavaCertificate from '@/components/GilavaCertificate'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
-
-const prisma = new PrismaClient()
 
 export default async function VerifyPage(props: { params: Promise<{ id: string }> }) {
     // Awaiting params to satisfy Next.js 15+ async params requirement
     const params = await props.params;
     const { id } = params;
 
-    const certificate = await prisma.certificate.findUnique({
-        where: { id },
-    })
+    const certificate = await getCertificateFromGitHub(id)
 
     if (!certificate) {
         notFound()

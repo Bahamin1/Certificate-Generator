@@ -1,28 +1,17 @@
 import { NextResponse } from 'next/server'
-import { PrismaClient } from '@prisma/client'
-
-const prisma = new PrismaClient()
+import { saveCertificateToGitHub } from '@/lib/github'
 
 export async function POST(request: Request) {
   try {
     const body = await request.json()
-    const { id, recipientName, certificateType, date, issuingAuthority, qrCodeData, studentPhoto } = body
+    // Validation could go here
 
-    const certificate = await prisma.certificate.create({
-      data: {
-        id, // Allow client-side ID or let DB generate if omitted (but we pass it currently)
-        recipientName,
-        certificateType,
-        date,
-        issuingAuthority,
-        qrCodeData,
-        studentPhoto,
-      },
-    })
+    // Save to GitHub
+    await saveCertificateToGitHub(body.id, body)
 
-    return NextResponse.json(certificate)
-  } catch (error) {
+    return NextResponse.json({ success: true, id: body.id })
+  } catch (error: any) {
     console.error('Error saving certificate:', error)
-    return NextResponse.json({ error: 'Failed to save certificate' }, { status: 500 })
+    return NextResponse.json({ error: error.message || 'Failed to save certificate' }, { status: 500 })
   }
 }
