@@ -8,7 +8,7 @@ import { useState } from 'react'
 import { toast } from 'react-hot-toast'
 import GilavaCertificate, { CertificateType } from './GilavaCertificate'
 
-import { toPng } from 'html-to-image'
+import { toJpeg } from 'html-to-image'
 
 export default function CertificateForm() {
   const [formData, setFormData] = useState({
@@ -74,10 +74,9 @@ export default function CertificateForm() {
       let imageData = ''
 
       if (node) {
-        // Temporarily remove scale transform for better quality capture if needed, 
-        // or just capture as is. toPng usually captures what is rendered.
-        // Let's capture high quality
-        imageData = await toPng(node, { quality: 0.95, pixelRatio: 2 })
+        // Use JPEG for storage to drastically reduce size (to avoid Vercel 4.5MB limit)
+        // PixelRatio 1.5 is enough for screen verification. Quality 0.8 is standard.
+        imageData = await toJpeg(node, { quality: 0.8, pixelRatio: 1.5 })
       }
 
       const response = await fetch('/api/certificates', {

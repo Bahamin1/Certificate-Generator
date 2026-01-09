@@ -111,8 +111,9 @@ export async function getCertificateFromGitHub(id: string) {
 }
 
 export async function getImageFromGitHub(id: string) {
-    const path = `data/images/${id}.png`
-    const url = `${GITHUB_API_BASE}/repos/${REPO_OWNER}/${REPO_NAME}/contents/${path}?ref=${BRANCH}`
+    // Try JPG first (optimized), then PNG (legacy)
+    let path = `data/images/${id}.jpg`
+    let url = `${GITHUB_API_BASE}/repos/${REPO_OWNER}/${REPO_NAME}/contents/${path}?ref=${BRANCH}`
 
     const headers: HeadersInit = {
         Accept: 'application/vnd.github.v3+json',
@@ -122,7 +123,14 @@ export async function getImageFromGitHub(id: string) {
         headers.Authorization = `Bearer ${process.env.GITHUB_TOKEN}`
     }
 
-    const response = await fetch(url, { headers, next: { revalidate: 0 } })
+    let response = await fetch(url, { headers, next: { revalidate: 0 } })
+
+    // If JPG not found, try PNG
+    if (response.status === 404) {
+        path = `data/images/${id}.png`
+        url = `${GITHUB_API_BASE}/repos/${REPO_OWNER}/${REPO_NAME}/contents/${path}?ref=${BRANCH}`
+        response = await fetch(url, { headers, next: { revalidate: 0 } })
+    }
 
     if (!response.ok) {
         if (response.status === 404) return null
@@ -131,6 +139,9 @@ export async function getImageFromGitHub(id: string) {
     }
 
     const json = await response.json()
+
+    const isPng = path.endsWith('.png')
+    const mimeType = isPng ? 'image/png' : 'image/jpeg'
 
     // If file is > 1MB, GitHub API doesn't return content, but provides download_url
     if (!json.content && json.download_url) {
@@ -141,7 +152,7 @@ export async function getImageFromGitHub(id: string) {
         }
         const arrayBuffer = await blobResponse.arrayBuffer()
         const base64 = Buffer.from(arrayBuffer).toString('base64')
-        return `data:image/png;base64,${base64}`
+        return `data:${mimeType};base64,${base64}`
     }
 
     if (!json.content) {
@@ -149,5 +160,5 @@ export async function getImageFromGitHub(id: string) {
     }
 
     // Content is base64 encoded
-    return `data:image/png;base64,${json.content.replace(/\n/g, '')}`
+    return `data:${mimeType};base64,${json.content.replace(/\n/g, '')}`
 }
