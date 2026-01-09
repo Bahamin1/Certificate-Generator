@@ -37,25 +37,25 @@ export default function Login({ onLogin }: LoginProps) {
   return (
     <form onSubmit={handleSubmit} className="space-y-4 w-full max-w-md mx-auto">
       <div>
-        <Label htmlFor="username">Username</Label>
+        <Label htmlFor="username" className="text-gray-300">Username</Label>
         <Input
           id="username"
           type="text"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           required
-          className="mt-1"
+          className="mt-1 bg-gray-800 border-gray-700 text-white focus:border-blue-500"
         />
       </div>
       <div>
-        <Label htmlFor="password">Password</Label>
+        <Label htmlFor="password" className="text-gray-300">Password</Label>
         <Input
           id="password"
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
-          className="mt-1"
+          className="mt-1 bg-gray-800 border-gray-700 text-white focus:border-blue-500"
         />
       </div>
       <Button type="submit" disabled={isLoading} className="w-full">

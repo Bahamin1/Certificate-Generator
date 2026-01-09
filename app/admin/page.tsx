@@ -25,11 +25,11 @@ export default function AdminPage() {
     }
 
     return (
-        <div className="min-h-screen bg-slate-50 pt-24 px-4 pb-12">
+        <div className="min-h-screen pt-24 px-4 pb-12">
             <div className="max-w-7xl mx-auto">
                 <div className="text-center mb-10">
-                    <h1 className="text-3xl font-bold text-slate-900 tracking-tight">Admin Dashboard</h1>
-                    <p className="text-slate-500 mt-2">Generate and manage certificates</p>
+                    <h1 className="text-3xl font-bold text-white tracking-tight">Admin Dashboard</h1>
+                    <p className="text-slate-400 mt-2">Generate and manage certificates</p>
                 </div>
 
                 {isLoggedIn ? (

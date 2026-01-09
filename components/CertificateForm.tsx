@@ -90,12 +90,12 @@ export default function CertificateForm() {
   if (certificate) {
     return (
       <div className="flex flex-col items-center gap-6 w-full animate-in fade-in duration-500">
-        <div className="flex gap-4 w-full max-w-4xl justify-between items-center bg-slate-100 p-4 rounded-lg shadow-sm">
-          <Button variant="outline" onClick={() => setCertificate(null)}>
+        <div className="flex gap-4 w-full max-w-4xl justify-between items-center bg-gray-800/50 backdrop-blur-sm border border-white/10 p-4 rounded-lg shadow-sm">
+          <Button variant="outline" onClick={() => setCertificate(null)} className="border-gray-600 text-gray-300 hover:bg-gray-700 hover:text-white">
             ← Back to Edit
           </Button>
           <div className="flex gap-2">
-            <Button onClick={handleSave} disabled={isLoading} className="bg-green-600 hover:bg-green-700 text-white">
+            <Button onClick={handleSave} disabled={isLoading} className="bg-green-600 hover:bg-green-700 text-white font-semibold shadow-lg shadow-green-900/20">
               {isLoading ? 'Saving...' : 'Save to Database'}
             </Button>
           </div>
@@ -108,40 +108,40 @@ export default function CertificateForm() {
   }
 
   return (
-    <div className="max-w-md mx-auto bg-white p-8 rounded-xl shadow-lg border border-slate-100">
-      <h2 className="text-2xl font-bold mb-6 text-slate-800 text-center">New Certificate</h2>
+    <div className="max-w-md mx-auto bg-gray-800/80 backdrop-blur-md p-8 rounded-xl shadow-2xl border border-white/10">
+      <h2 className="text-2xl font-bold mb-6 text-white text-center">New Certificate</h2>
       <form onSubmit={handleSubmit} className="space-y-5">
         <div>
-          <Label htmlFor="recipientName">Recipient&apos;s Name</Label>
+          <Label htmlFor="recipientName" className="text-gray-300">Recipient&apos;s Name</Label>
           <Input
             id="recipientName"
             name="recipientName"
             value={formData.recipientName}
             onChange={handleInputChange}
             required
-            className="mt-1.5"
+            className="mt-1.5 bg-gray-900/50 border-gray-600 text-white placeholder:text-gray-500 focus:border-blue-500"
             placeholder="e.g. John Doe"
           />
         </div>
         <div>
-          <Label htmlFor="certificateType">Certificate Type</Label>
+          <Label htmlFor="certificateType" className="text-gray-300">Certificate Type</Label>
           <Select onValueChange={handleSelectChange} required value={formData.certificateType}>
-            <SelectTrigger className="mt-1.5">
+            <SelectTrigger className="mt-1.5 bg-gray-900/50 border-gray-600 text-white focus:border-blue-500">
               <SelectValue placeholder="Select Level" />
             </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="A1">A1 Beginner</SelectItem>
-              <SelectItem value="A2">A2 Elementary</SelectItem>
-              <SelectItem value="B1">B1 Intermediate</SelectItem>
-              <SelectItem value="B2">B2 Upper Intermediate</SelectItem>
-              <SelectItem value="C1">C1 Advanced</SelectItem>
-              <SelectItem value="C2">C2 Proficiency</SelectItem>
-              <SelectItem value="TOEFL">TOEFL</SelectItem>
+            <SelectContent className="bg-gray-800 border-gray-700 text-white">
+              <SelectItem value="A1" className="focus:bg-gray-700 focus:text-white">A1 Beginner</SelectItem>
+              <SelectItem value="A2" className="focus:bg-gray-700 focus:text-white">A2 Elementary</SelectItem>
+              <SelectItem value="B1" className="focus:bg-gray-700 focus:text-white">B1 Intermediate</SelectItem>
+              <SelectItem value="B2" className="focus:bg-gray-700 focus:text-white">B2 Upper Intermediate</SelectItem>
+              <SelectItem value="C1" className="focus:bg-gray-700 focus:text-white">C1 Advanced</SelectItem>
+              <SelectItem value="C2" className="focus:bg-gray-700 focus:text-white">C2 Proficiency</SelectItem>
+              <SelectItem value="TOEFL" className="focus:bg-gray-700 focus:text-white">TOEFL</SelectItem>
             </SelectContent>
           </Select>
         </div>
         <div>
-          <Label htmlFor="date">Date of Issue</Label>
+          <Label htmlFor="date" className="text-gray-300">Date of Issue</Label>
           <Input
             id="date"
             name="date"
@@ -149,22 +149,22 @@ export default function CertificateForm() {
             value={formData.date}
             onChange={handleInputChange}
             required
-            className="mt-1.5"
+            className="mt-1.5 bg-gray-900/50 border-gray-600 text-white focus:border-blue-500 [color-scheme:dark]"
           />
         </div>
         <div>
-          <Label htmlFor="studentPhoto">Student Photo (Optional)</Label>
+          <Label htmlFor="studentPhoto" className="text-gray-300">Student Photo (Optional)</Label>
           <Input
             id="studentPhoto"
             name="studentPhoto"
             type="file"
             accept="image/*"
             onChange={handlePhotoUpload}
-            className="mt-1.5 cursor-pointer"
+            className="mt-1.5 cursor-pointer bg-gray-900/50 border-gray-600 text-gray-300 file:bg-gray-700 file:text-white file:border-0 file:mr-4 file:px-4 file:py-2 file:rounded-md hover:file:bg-gray-600"
           />
         </div>
 
-        <Button type="submit" disabled={isLoading} className="w-full bg-blue-900 hover:bg-blue-800 text-white py-6 text-lg mt-4">
+        <Button type="submit" disabled={isLoading} className="w-full bg-blue-600 hover:bg-blue-500 text-white py-6 text-lg mt-4 shadow-lg shadow-blue-500/20 font-semibold">
           {isLoading ? 'Generating...' : 'Generate Certificate'}
         </Button>
       </form>
