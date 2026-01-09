@@ -21,7 +21,50 @@ export default function CertificateForm() {
   const [studentPhoto, setStudentPhoto] = useState<string>('')
   const [isLoading, setIsLoading] = useState(false)
 
-  // ... (existing handlers)
+  // ... (existing handlers) - Restoring...
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target
+    setFormData((prev) => ({ ...prev, [name]: value }))
+  }
+
+  const handleSelectChange = (value: string) => {
+    setFormData((prev) => ({ ...prev, certificateType: value }))
+  }
+
+  const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (file) {
+      const reader = new FileReader()
+      reader.onloadend = () => {
+        setStudentPhoto(reader.result as string)
+      }
+      reader.readAsDataURL(file)
+    }
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setIsLoading(true)
+    try {
+      // Simulate API call
+      await new Promise(resolve => setTimeout(resolve, 1000))
+      const generatedId = Date.now().toString()
+      const generatedCertificate: CertificateType = {
+        ...formData,
+        id: generatedId,
+        qrCodeData: `https://gilava-academy.vercel.app/verify/${generatedId}`,
+        studentPhoto: studentPhoto
+      }
+      setCertificate(generatedCertificate)
+      toast.success('Certificate generated successfully!')
+    } catch (error) {
+      console.error('Error generating certificate:', error)
+      toast.error('Error generating certificate')
+    } finally {
+      setIsLoading(false)
+    }
+  }
 
   const handleSave = async () => {
     if (!certificate) return
