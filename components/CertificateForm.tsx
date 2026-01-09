@@ -49,7 +49,7 @@ export default function CertificateForm() {
       const generatedCertificate: CertificateType = {
         ...formData,
         id: generatedId,
-        qrCodeData: `https://gilava-academy.app/verify/${generatedId}`,
+        qrCodeData: `https://gilava-academy.vercel.app/verify/${generatedId}`,
         studentPhoto: studentPhoto
       }
       setCertificate(generatedCertificate)

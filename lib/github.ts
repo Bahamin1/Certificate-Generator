@@ -5,8 +5,10 @@ export const BRANCH = 'main'
 
 export async function saveCertificateToGitHub(id: string, data: any) {
     const token = process.env.GITHUB_TOKEN
+
     if (!token) {
-        throw new Error('GITHUB_TOKEN is not defined')
+        console.error('SERVER ERROR: GITHUB_TOKEN is missing from environment variables.')
+        throw new Error('Configuration Error: GITHUB_TOKEN is missing. Please add it to Vercel Environment Variables and Redeploy.')
     }
 
     const path = `data/certificates/${id}.json`
@@ -15,8 +17,7 @@ export async function saveCertificateToGitHub(id: string, data: any) {
 
     const url = `${GITHUB_API_BASE}/repos/${REPO_OWNER}/${REPO_NAME}/contents/${path}`
 
-    // Check if file exists to get SHA (for update) - though for new certs it shouldn't exist
-    // We'll just try to create. If it exists, we might need sha, but let's assume unique IDs for now.
+    console.log(`Attempting to save to GitHub: ${url}`)
 
     const response = await fetch(url, {
         method: 'PUT',
@@ -34,7 +35,8 @@ export async function saveCertificateToGitHub(id: string, data: any) {
 
     if (!response.ok) {
         const errorText = await response.text()
-        throw new Error(`GitHub API Error: ${response.status} - ${errorText}`)
+        console.error(`GitHub API Failed: ${response.status}`, errorText)
+        throw new Error(`GitHub API Error (${response.status}): ${errorText}`)
     }
 
     return await response.json()
