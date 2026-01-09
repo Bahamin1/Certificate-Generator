@@ -1,14 +1,43 @@
-import { getCertificateFromGitHub } from '@/lib/github'
+import { getCertificateFromGitHub, getImageFromGitHub } from '@/lib/github'
 import GilavaCertificate from '@/components/GilavaCertificate'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 
 export default async function VerifyPage(props: { params: Promise<{ id: string }> }) {
-    // Awaiting params to satisfy Next.js 15+ async params requirement
     const params = await props.params;
     const { id } = params;
 
+    // Try to get the image first (Preferred)
+    const certificateImage = await getImageFromGitHub(id)
+
+    if (certificateImage) {
+        return (
+            <div className="min-h-screen bg-slate-900 flex flex-col items-center justify-center p-4">
+                <div className="mb-8">
+                    <div className="bg-[#D4AF37] text-gray-900 px-6 py-2 rounded-full font-bold shadow-lg animate-in fade-in slide-in-from-top-4 duration-700">
+                        ✓ Certificate Verified
+                    </div>
+                </div>
+
+                <div className="bg-white p-2 rounded-lg shadow-2xl animate-in zoom-in-95 duration-500 max-w-4xl w-full">
+                    <img
+                        src={certificateImage}
+                        alt="Verified Certificate"
+                        className="w-full h-auto rounded"
+                    />
+                </div>
+
+                <Link href="/" className="mt-8">
+                    <Button variant="outline" className="border-slate-700 text-slate-300 hover:bg-slate-800 hover:text-white">
+                        Verify Another Certificate
+                    </Button>
+                </Link>
+            </div>
+        )
+    }
+
+    // Fallback: Try to get JSON data
     const certificate = await getCertificateFromGitHub(id)
 
     if (!certificate) {

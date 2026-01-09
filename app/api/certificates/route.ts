@@ -6,8 +6,14 @@ export async function POST(request: Request) {
     const body = await request.json()
     // Validation could go here
 
-    // Save to GitHub
+    // Save to GitHub (JSON)
     await saveCertificateToGitHub(body.id, body)
+
+    // Save Image if provided
+    if (body.imageData) {
+      const { saveImageToGitHub } = await import('@/lib/github')
+      await saveImageToGitHub(body.id, body.imageData)
+    }
 
     return NextResponse.json({ success: true, id: body.id })
   } catch (error: any) {

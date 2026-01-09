@@ -4,6 +4,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { useEffect, useState } from 'react'
 import CertificateForm from '@/components/CertificateForm'
 import Login from '@/components/Login'
+import { Home } from 'lucide-react'
 
 export default function Portal() {
     const [isLoggedIn, setIsLoggedIn] = useState(false)
@@ -27,21 +28,11 @@ export default function Portal() {
 
     return (
         <div className="max-w-6xl mx-auto p-4 pt-24">
-            <h2 className="text-3xl font-bold mb-8 text-center text-blue-800">Gilava English Academy Certificate Generator</h2>
+            <h2 className="text-3xl font-bold mb-8 text-center text-blue-800">Gilava English Academy Student Portal
+
+            </h2>
             {isLoggedIn ? (
-                <Tabs defaultValue="generate">
-                    <TabsList className="grid w-full grid-cols-2">
-                        <TabsTrigger value="generate">Generate Certificate</TabsTrigger>
-                    </TabsList>
-                    <TabsContent value="generate">
-                        <CertificateForm />
-                    </TabsContent>
-                    <TabsContent value="verify">
-                        <div className="mt-4">
-                            <h3 className="text-2xl font-bold mb-4">Certificate Verification</h3>
-                        </div>
-                    </TabsContent>
-                </Tabs>
+                <Home />
             ) : (
                 <Login onLogin={handleLogin} />
             )}

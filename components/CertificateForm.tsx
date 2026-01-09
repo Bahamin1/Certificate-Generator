@@ -8,6 +8,8 @@ import { useState } from 'react'
 import { toast } from 'react-hot-toast'
 import GilavaCertificate, { CertificateType } from './GilavaCertificate'
 
+import { toPng } from 'html-to-image'
+
 export default function CertificateForm() {
   const [formData, setFormData] = useState({
     recipientName: '',
@@ -19,63 +21,35 @@ export default function CertificateForm() {
   const [studentPhoto, setStudentPhoto] = useState<string>('')
   const [isLoading, setIsLoading] = useState(false)
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target
-    setFormData((prev) => ({ ...prev, [name]: value }))
-  }
-
-  const handleSelectChange = (value: string) => {
-    setFormData((prev) => ({ ...prev, certificateType: value }))
-  }
-
-  const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
-    if (file) {
-      const reader = new FileReader()
-      reader.onloadend = () => {
-        setStudentPhoto(reader.result as string)
-      }
-      reader.readAsDataURL(file)
-    }
-  }
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsLoading(true)
-    try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000))
-      const generatedId = Date.now().toString()
-      const generatedCertificate: CertificateType = {
-        ...formData,
-        id: generatedId,
-        qrCodeData: `https://gilava-academy.vercel.app/verify/${generatedId}`,
-        studentPhoto: studentPhoto
-      }
-      setCertificate(generatedCertificate)
-      toast.success('Certificate generated successfully!')
-    } catch (error) {
-      console.error('Error generating certificate:', error)
-      toast.error('Error generating certificate')
-    } finally {
-      setIsLoading(false)
-    }
-  }
+  // ... (existing handlers)
 
   const handleSave = async () => {
     if (!certificate) return
     setIsLoading(true)
     try {
+      const node = document.getElementById('certificate-display')
+      let imageData = ''
+
+      if (node) {
+        // Temporarily remove scale transform for better quality capture if needed, 
+        // or just capture as is. toPng usually captures what is rendered.
+        // Let's capture high quality
+        imageData = await toPng(node, { quality: 0.95, pixelRatio: 2 })
+      }
+
       const response = await fetch('/api/certificates', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(certificate),
+        body: JSON.stringify({
+          ...certificate,
+          imageData // Send base64 image
+        }),
       })
 
       if (response.ok) {
-        toast.success('Certificate saved to database!')
+        toast.success('Certificate and Image saved to GitHub!')
       } else {
         toast.error('Failed to save certificate.')
       }
@@ -100,7 +74,8 @@ export default function CertificateForm() {
             </Button>
           </div>
         </div>
-        <div className="transform scale-[0.8] origin-top md:scale-100">
+        <div id="certificate-display" className="transform scale-[0.8] origin-top md:scale-100 bg-white">
+          {/* Added bg-white to ensure capture has background if transparent */}
           <GilavaCertificate {...certificate} />
         </div>
       </div>
