@@ -38,7 +38,7 @@ export default function LandingPage() {
                         <h1 className="text-4xl font-bold tracking-tight text-white sm:text-6xl font-serif">
                             Education Without <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-300">Borders</span>
                         </h1>
-                        <p className="mt-6 text-lg leading-8 text-gray-300">
+                        <p className="mt-6 text-lg leading-8 text-gray-200">
                             Join a global community of learners. Experience world-class English education through our immersive online platform and state-of-the-art physical campuses across the globe.
                         </p>
                         <div className="mt-10 flex items-center justify-center gap-x-6">
@@ -65,7 +65,7 @@ export default function LandingPage() {
                             { id: 3, name: 'Certified Graduates', value: '12,000+' },
                         ].map((stat) => (
                             <div key={stat.id} className="mx-auto flex max-w-xs flex-col gap-y-4">
-                                <dt className="text-base leading-7 text-gray-400">{stat.name}</dt>
+                                <dt className="text-base leading-7 text-gray-300">{stat.name}</dt>
                                 <dd className="order-first text-3xl font-semibold tracking-tight text-white sm:text-5xl">
                                     {stat.value}
                                 </dd>
@@ -83,7 +83,7 @@ export default function LandingPage() {
                         <p className="mt-2 text-3xl font-bold tracking-tight text-white sm:text-4xl font-serif">
                             Everything you need to master English
                         </p>
-                        <p className="mt-6 text-lg leading-8 text-gray-400">
+                        <p className="mt-6 text-lg leading-8 text-gray-300">
                             We combine traditional academic excellence with cutting-edge technology to deliver a learning experience that works for everyone, everywhere.
                         </p>
                     </div>
@@ -126,7 +126,7 @@ export default function LandingPage() {
                                         <feature.icon className="h-6 w-6 flex-none text-blue-400" aria-hidden="true" />
                                         {feature.name}
                                     </dt>
-                                    <dd className="mt-4 flex flex-auto flex-col text-base leading-7 text-gray-400">
+                                    <dd className="mt-4 flex flex-auto flex-col text-base leading-7 text-gray-300">
                                         <p className="flex-auto">{feature.description}</p>
                                     </dd>
                                 </div>
@@ -170,7 +170,7 @@ export default function LandingPage() {
             <footer className="bg-gray-900 border-t border-white/10">
                 <div className="mx-auto max-w-7xl px-6 py-12 md:flex md:items-center md:justify-between lg:px-8">
                     <div className="flex justify-center space-x-6 md:order-2">
-                        <span className="text-gray-400 text-sm">© 2026 Gilava English Academy. All rights reserved.</span>
+                        <span className="text-gray-300 text-sm">© 2026 Gilava English Academy. All rights reserved.</span>
                     </div>
                     <div className="mt-8 md:order-1 md:mt-0">
                         <p className="text-center text-xs leading-5 text-gray-500">
