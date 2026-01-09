@@ -61,12 +61,15 @@ export default function Header() {
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
                             </svg>
                         )}
-                    </button>
-                </div>
+                    </nav>
+                    )
+}
+                </button>
             </div>
         </div>
+        </div >
 
-            {/* Mobile Menu */ }
+        {/* Mobile Menu */ }
     {
         isMenuOpen && (
             <div className="md:hidden bg-gray-900 border-b border-white/10 animate-in slide-in-from-top-5 duration-200">
