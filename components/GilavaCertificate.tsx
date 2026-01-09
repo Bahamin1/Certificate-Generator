@@ -320,7 +320,7 @@ const GilavaCertificate: React.FC<CertificateProps> = ({
 
         </div>
       </div>
-      <div className="mt-8 flex gap-4">
+      <div className="mt-8 flex gap-4 no-capture">
         <Button onClick={downloadAsImage} className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-10 rounded-full shadow-xl transition-all hover:scale-105">
           Download Image (High Res)
         </Button>

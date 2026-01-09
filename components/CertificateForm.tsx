@@ -74,9 +74,15 @@ export default function CertificateForm() {
       let imageData = ''
 
       if (node) {
-        // Use JPEG for storage to drastically reduce size (to avoid Vercel 4.5MB limit)
-        // PixelRatio 1.5 is enough for screen verification. Quality 0.8 is standard.
-        imageData = await toJpeg(node, { quality: 0.8, pixelRatio: 1.5 })
+        // Use JPEG for storage. Increased quality/ratio per user request (~2-3MB goal).
+        imageData = await toJpeg(node, {
+          quality: 0.95,
+          pixelRatio: 2.5,
+          filter: (child) => {
+            // Exclude elements with 'no-capture' class (buttons)
+            return !child.classList?.contains('no-capture')
+          }
+        })
       }
 
       const response = await fetch('/api/certificates', {
