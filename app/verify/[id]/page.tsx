@@ -72,9 +72,11 @@ export default async function VerifyPage(props: { params: Promise<{ id: string }
             </div>
 
             {/* Certificate Display */}
-            <div className="scale-[0.6] md:scale-[0.7] lg:scale-[0.8] origin-top shadow-2xl rounded-lg overflow-hidden ring-4 ring-[#D4AF37]/30">
-                <div className="pointer-events-none select-none">
-                    <GilavaCertificate {...certificateProps} />
+            <div className="w-full flex justify-center overflow-hidden py-4">
+                <div className="scale-[0.35] xs:scale-[0.4] sm:scale-[0.55] md:scale-[0.7] lg:scale-[0.8] origin-top shadow-2xl rounded-lg ring-4 ring-[#D4AF37]/30 transition-transform duration-300">
+                    <div className="pointer-events-none select-none">
+                        <GilavaCertificate {...certificateProps} />
+                    </div>
                 </div>
             </div>
 

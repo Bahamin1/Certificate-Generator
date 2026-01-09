@@ -119,7 +119,7 @@ export default function CertificateForm() {
             </Button>
           </div>
         </div>
-        <div id="certificate-display" className="transform scale-[0.8] origin-top md:scale-100 bg-white">
+        <div id="certificate-display" className="transform scale-[0.35] xs:scale-[0.45] sm:scale-[0.6] md:scale-[0.8] lg:scale-100 origin-top bg-white rounded-lg shadow-xl overflow-hidden transition-all duration-300">
           {/* Added bg-white to ensure capture has background if transparent */}
           <GilavaCertificate {...certificate} />
         </div>
